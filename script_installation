@@ -89,15 +89,46 @@ sleep 3
 getent group user42
 BLUE "CREATION SUDO.LOG"
 sleep 3
-cd var/log
+cd /var/log
 mkdir sudo
+BLUE "VERIFICATION DU FICHIER"
+ls
+sleep 3
 cd sudo
 touch sudo.log
-BLUE "VERIFICATION"
-sleep 3
+BLUE "VERIFICATION sudo.log"
 ls
-cd ..
-cd ..
-cd ..
+sleep 3
+cd ~
+BLUE "VERIFICATION DE L'EMPLACEMENT"
 ls -a
+sleep 3
+sed -i '/^Defaults.*bin"$/a Defaults	requiretty/' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	log_input, log_output/' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	logfile="/var/log/sudo/sudo.log/' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	passwd_tries=3/' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	bad_message="Mot de passe incorrect"/' /etc/sudoers
+BLUE "INSTALLATION DE net-tools"
+sleep 3
+apt install -y net-tools
+BLUE "INSTALLATION DE wget"
+sleep 3
+apt install wget -y
+BLUE "MONITORING"
+sleep 3
+cd /usr/local/bin
+wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Test/refs/heads/main/monitoring.sh
+BLUE "ATTRIBUTION DES DROITS"
+sleep 3
+chmod 777 monitoring.sh
+BLUE "AJOUT DROIT DANS sudoers"
+sleep 3
+sed -i '/^%sudo.*ALL$/a gbehra	ALL=(ALL) NOPASSWD: /usr/local/bin/monitoring.sh/' /etc/sudoers
+BLUE "TEST SCRIPT MONITORING"
+sleep 3
+/usr/local/bin/monitoring.sh
+BLUE "AJOUT REGLE CRONTAB"
+sleep 3
+(crontab -l; echo "*/10 * * * * /usr/local/bin/monitoring.sh") | crontab -
+
 BLUE "FIN"
