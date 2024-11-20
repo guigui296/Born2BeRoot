@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 red='\033[0;31m'
 nc='\033[0m'
 
