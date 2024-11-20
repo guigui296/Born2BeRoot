@@ -1,8 +1,9 @@
 #!/bin/bash
 BLUEC=$(tput setaf 4)
 RESET=$(tput sgr0)
+BACK=$(tput setab 7)
 
-function BLUE () { echo "${BLUEC}$1${RESET}"; }
+function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
 
 BLUE "Mise à jour du système"
 sleep 5
