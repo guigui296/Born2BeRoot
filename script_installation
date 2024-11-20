@@ -20,7 +20,7 @@ sleep 3
 getent group sudo
 BLUE "AJOUT DES PRIVILEGES A gbehra DANS SUDOERS"
 sleep 3
-sed -i '/^# User privilege specification/a gbehra	ALL=(ALL) ALL/' /etc/sudoers
+sed -i '/^# User privilege specification/a gbehra	ALL=(ALL) ALL' /etc/sudoers
 BLUE "INSTALLATION DE VIM"
 sleep 3
 apt install vim -y
