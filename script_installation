@@ -1,8 +1,8 @@
 !#/bin/bash
-red='\033[0;31m'
-nc='\033[0m'
+red_color='\033[0;31m'
+nc_color='\033[0m'
 
-function RED () { echo "${red}$1${nc}"; }
+function RED () { echo "${red_color}$1${nc_color}"; }
 
 RED "Mise à jour du système";
 sleep 5
