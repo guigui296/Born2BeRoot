@@ -1,5 +1,5 @@
 !#/bin/bash
-function red () {echo -e "\e[1;4;31m$1\e[0m"; }
+function red () { echo -e "\e[1;4;31m$1\e[0m"; }
 
 red "Mise à jour du système"
 sleep 10
