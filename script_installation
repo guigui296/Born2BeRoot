@@ -1,11 +1,14 @@
 !#/bin/bash
-function red () { echo -e "\e[1;4;31m$1\e[0m"; }
+red='\033[0;31m'
+line='\033[4;31m'
+gras='\033[1;31m'
+function text () { echo -e "${red}${line}${gras}$1"; }
 
-red "Mise à jour du système"
+text "Mise à jour du système"
 sleep 10
 apt update -y
 apt upgrade -y
-red "Installation de sudo"
+text "Installation de sudo"
 apt install sudo -y
 echo "Ajout de gbehra au groupe sudo"
 usermod -aG sudo gbehra
@@ -28,7 +31,7 @@ grep Port /etc/ssh/sshd_config
 echo "Redémarrage du service ssh"
 service ssh restart
 echo "Installation de UFW"
-apt install ufw
+apt install ufw -y
 echo "Activation ufw"
 ufw enable
 echo "Vérification du statut"
@@ -43,7 +46,7 @@ systemctl restart ssh
 echo "Vérification du statut"
 service sshd status
 echo "Installation de libpam-pwquality"
-apt install libpam-pwquality
+apt install libpam-pwquality -y
 echo "Ajout des règles de mot de passe"
 sed -i '/^password.*pam_pwquality.so retry=3/s/$/ minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root/' /etc/pam.d/common-password
 echo "Mise en place de règles durée mot de passe"
