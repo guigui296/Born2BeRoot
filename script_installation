@@ -75,4 +75,29 @@ sleep 3
 sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS 30/' /etc/login.defs
 sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS 2/' /etc/login.defs
 sed -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE 7/' /etc/login.defs
-BLUE "LA PREMMIERE PARTIE EST FINIE, REBOOT VM PUIS LANCER LE DEUXIEME SCRIPT"
+BLUE "CREATION GROUPE user42"
+sleep 3
+groupadd user42
+BLUE "VERIFICATION"
+sleep 3
+getent group
+BLUE "AJOUT DE gbehra AU GROUPE user42"
+sleep 3
+usermod -aG user42 gbehra
+BLUE "VERIFICATION"
+sleep 3
+getent group user42
+BLUE "CREATION SUDO.LOG"
+sleep 3
+cd var/log
+mkdir sudo
+cd sudo
+touch sudo.log
+BLUE "VERIFICATION"
+sleep 3
+ls
+cd ..
+cd ..
+cd ..
+ls -a
+BLUE "FIN"
