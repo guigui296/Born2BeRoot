@@ -149,9 +149,13 @@ BLUE "AJOUT REGLE CRONTAB"
 (crontab -l; echo "*/10 * * * * /usr/local/bin/monitoring.sh") | crontab -
 sleep 3
 BLUE "CHANGEMENT DES MOTS DE PASSES POUR LE RESPECT DE LA POLITIQUE (root et gbehra)"
+echo "gbehra:$USER_PASSWORD" | chpasswd
 echo "root:$ROOT_PASSWORD" | chpasswd
-echo "utilisateur1:$USER_PASSWORD" | chpasswd
 BLUE "Les mots de passe ont été modifiés avec succès"
+BLUE "APPLICATION DES POLITIQUES D'EXPIRATION DES MOTS DE PASSES"
+chage -M 30 -m 2 -W 7 root
+chage -M 30 -m 2 -W 7 gbehra
+sleep 2
 BLUE "VERIFICATION AVANT REBOOT"
 chage -l gbehra
 chage -l root
