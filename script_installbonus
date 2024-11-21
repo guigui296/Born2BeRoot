@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BLUEC=$(tput setaf 4)
+RESET=$(tput sgr0)
+BACK=$(tput setab 7)
+
+function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+
+BLUE "INSTALLATION DE LA PARTIE BONUS"
+sleep 5

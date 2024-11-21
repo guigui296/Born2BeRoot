@@ -1,136 +1,172 @@
 #!/bin/bash
+
+if [ "$(id -u)" -ne 0 ]; then
+  RED "Ce script doit être exécuté en tant que root"
+  exit 1
+fi
+
 BLUEC=$(tput setaf 4)
+REDC=$(tput setaf 1)
 RESET=$(tput sgr0)
 BACK=$(tput setab 7)
 
-function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+ROOT_PASSWORD="J3su1sr0otb0rn2b3R0ot"
+USER_PASSWORD="J3su1sgb3hr@!b0rn2b3R0ot"
 
+function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+function RED () { echo "${REDC}${BACK}$1${RESET}"; }
+
+BLUE "SUPPRESSION DE monitoring.sh CAR FLEMME DE CHANGER LE GITHUB"
+cd ~
+cd Test
+rm monitoring.sh
+ls
+sleep 3
+cd ~
 BLUE "MISE A JOUR DU SYSTEME"
-#sleep 5
 apt update -y
 apt upgrade -y
+sleep 3
 BLUE "INSTALLATION DE SUDO"
-#sleep 3
 apt install sudo -y
+sleep 3
 BLUE "AJOUT DE gbehra AU GROUPE SUDO"
-#sleep 3
 usermod -aG sudo gbehra
+sleep 3
 BLUE "VERIFICATION DE L'AJOUT"
-#sleep 3
 getent group sudo
+sleep 3
 BLUE "AJOUT DES PRIVILEGES A gbehra DANS SUDOERS"
-#sleep 3
 sed -i '/^# User privilege specification/a gbehra	ALL=(ALL) ALL' /etc/sudoers
+sleep 3
 BLUE "INSTALLATION DE VIM"
-#sleep 3
 apt install vim -y
+sleep 3
 BLUE "VERIFICATION DE LA VERSION"
-#sleep 3
 vim --version
+sleep 3
 BLUE "INSTALLATION DE OPENSSH"
-#sleep 3
 apt install openssh-server -y
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 systemctl status ssh
+sleep 3
 BLUE "CHANGEMENT DU PORT 22 EN 4242"
-#sleep 3
 sed -i 's/^#Port 22$/Port 4242/' /etc/ssh/sshd_config
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 grep Port /etc/ssh/sshd_config
+sleep 3
 BLUE "REDEMARRAGE DU SERVICE SSH"
-#sleep 3
 service ssh restart
+sleep 3
 BLUE "INSTALLATION DE UFW"
-#sleep 3
 apt install ufw -y
+sleep 3
 BLUE "ACTIVATION DE UFW"
-#sleep 3
 ufw enable
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 ufw status numbered
+sleep 3
 BLUE "CONFIGURATION PORT"
-#sleep 3
 ufw allow ssh
 ufw allow 4242
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 ufw status numbered
+sleep 3
 BLUE "REDEMARRAGE SSH"
-#sleep 3
 systemctl restart ssh
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 service sshd status
+sleep 3
 BLUE "INSTALLATION DE LIBPAM-PWQUALITY"
-#sleep 3
 apt install libpam-pwquality -y
+sleep 3
 BLUE "AJOUT DES REGLES MOT DE PASSE"
-#sleep 3
 sed -i '/^password.*pam_pwquality.so retry=3/s/$/ minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root/' /etc/pam.d/common-password
+sleep 3
 BLUE "MISE EN PLACE DES REGLES DE DUREE DU MOT DE PASSE"
-#sleep 3
 sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS 30/' /etc/login.defs
 sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS 2/' /etc/login.defs
 sed -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE 7/' /etc/login.defs
+sleep 3
 BLUE "CREATION GROUPE user42"
-#sleep 3
 groupadd user42
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 getent group
+sleep 3
 BLUE "AJOUT DE gbehra AU GROUPE user42"
-#sleep 3
 usermod -aG user42 gbehra
+sleep 3
 BLUE "VERIFICATION"
-#sleep 3
 getent group user42
+sleep 3
 BLUE "CREATION SUDO.LOG"
-#sleep 3
 cd /var/log
 mkdir sudo
+sleep 3
 BLUE "VERIFICATION DU FICHIER"
 ls
-#sleep 3
+sleep 3
 cd sudo
 touch sudo.log
 BLUE "VERIFICATION sudo.log"
 ls
-#sleep 3
+sleep 3
 cd ~
 BLUE "VERIFICATION DE L'EMPLACEMENT"
 ls -a
-#sleep 3
 sed -i '/^Defaults.*bin"$/a Defaults	requiretty' /etc/sudoers
 sed -i '/^Defaults.*bin"$/a Defaults	log_input, log_output' /etc/sudoers
-sed -i '/^Defaults.*bin"$/a Defaults	logfile="/var/log/sudo/sudo.log' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	logfile="/var/log/sudo/sudo.log"' /etc/sudoers
 sed -i '/^Defaults.*bin"$/a Defaults	passwd_tries=3' /etc/sudoers
-sed -i '/^Defaults.*bin"$/a Defaults	bad_message="Mot de passe incorrect"' /etc/sudoers
+sed -i '/^Defaults.*bin"$/a Defaults	badpass_message="Mot de passe incorrect"' /etc/sudoers
+sleep 3
 BLUE "INSTALLATION DE net-tools"
-#sleep 3
 apt install -y net-tools
+sleep 3
 BLUE "INSTALLATION DE wget"
-#sleep 3
 apt install wget -y
+sleep 3
 BLUE "MONITORING"
-#sleep 3
 cd /usr/local/bin
 wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Test/refs/heads/main/monitoring.sh
+sleep 3
 BLUE "ATTRIBUTION DES DROITS"
-#sleep 3
 chmod 777 monitoring.sh
+sleep 3
 BLUE "AJOUT DROIT DANS sudoers"
-#sleep 3
 sed -i '/^%sudo.*ALL$/a gbehra	ALL=(ALL) NOPASSWD: /usr/local/bin/monitoring.sh' /etc/sudoers
+sleep 3
 BLUE "TEST SCRIPT MONITORING"
-#sleep 3
 /usr/local/bin/monitoring.sh
+sleep 3
 BLUE "AJOUT REGLE CRONTAB"
-#sleep 3
 (crontab -l; echo "*/10 * * * * /usr/local/bin/monitoring.sh") | crontab -
+sleep 3
+BLUE "CHANGEMENT DES MOTS DE PASSES POUR LE RESPECT DE LA POLITIQUE (root et gbehra)"
+echo "root:$ROOT_PASSWORD" | chpasswd
+echo "utilisateur1:$USER_PASSWORD" | chpasswd
+BLUE "Les mots de passe ont été modifiés avec succès"
+BLUE "VERIFICATION AVANT REBOOT"
+chage -l gbehra
+chage -l root
+sleep 3
+BLUE "MODIFICATION REGLE DE script_installbonus ET script_correction"
 cd ~
-BLUE "FIN, SUPPRESSION DU SCRIPT"
-#sleep 3
-rm -r Test
+cd Test
+ls
+chmod +x script_installbonus
+chmod +x script_correction
+sleep 3
+BLUE "VERIFICATION"
+test -x script_installbonus && BLUE "script_installbonus est exécutable" || RED "script_installbonus n'est pas exécutable"
+test -x script_correction && BLUE "script_correction est exécutable" || RED "script_correction n'est pas exécutable"
+sleep 3
+BLUE "FIN, SUPPRESSION DU SCRIPT, REBOOT LA VM"
+sleep 3
+rm script_installation

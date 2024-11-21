@@ -1,0 +1,38 @@
+#!/bin/bash
+
+BLUEC=$(tput setaf 4)
+RESET=$(tput sgr0)
+BACK=$(tput setab 7)
+
+USERNAME="gbehra-2"
+PASSWORD="J3su1sgb3hr@2!b0rn2b3R0ot"
+
+function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+
+BLUE "CREATION DU NOUVEAU GROUPE"
+groupadd eval
+sleep 3
+BLUE "VERIFICATION"
+getent group eval
+sleep 3
+BLUE "CREATION D'UN NOUVEL UTILISATEUR"
+useradd -m -s "/bin/bash" "$USERNAME"
+echo "$USERNAME:$PASSWORD" | chpasswd
+BLUE "L'utilisateur $USERNAME a été créé avec le mot de passe $PASSWORD."
+sleep 3
+BLUE "AJOUT DE $USERNAME AU GROUPE eval"
+usermod -aG eval $USERNAME
+BLUE "VERIFICATION"
+getent group eval
+sleep 3
+BLUE "VERIFICATION DE LA POLITIQUE MOT DE PASSE"
+chage -l $USERNAME
+chage -l gbehra
+chage -l root
+sleep 3
+BLUE "VERIFICATION DES PARTITIONS"
+lsblk
+sleep 5
+BLUE "FIN DU SCRIPT, SUPPRESION DU DOSSIER GIT"
+cd ~
+rm -r Test
