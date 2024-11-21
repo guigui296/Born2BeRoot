@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Ce script doit être exécuté en tant que root."
+  exit 1
+fi
+
 BLUEC=$(tput setaf 4)
 RESET=$(tput sgr0)
 BACK=$(tput setab 7)
