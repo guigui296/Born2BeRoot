@@ -1,11 +1,12 @@
 #!/bin/bash
 
 if [ "$(id -u)" -ne 0 ]; then
-  echo "Ce script doit être exécuté en tant que root."
+  RED "Ce script doit être exécuté en tant que root."
   exit 1
 fi
 
 BLUEC=$(tput setaf 4)
+REDC=$(tput setaf 1)
 RESET=$(tput sgr0)
 BACK=$(tput setab 7)
 
@@ -13,6 +14,7 @@ USERNAME="gbehra-2"
 PASSWORD="J3su1sgb3hr@2!b0rn2b3R0ot"
 
 function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+function RED () { echo "${REDC}${BACK}$1${RESET}"; }
 
 BLUE "CREATION DU NOUVEAU GROUPE"
 groupadd eval
@@ -38,6 +40,6 @@ sleep 3
 BLUE "VERIFICATION DES PARTITIONS"
 lsblk
 sleep 5
-BLUE "FIN DU SCRIPT, SUPPRESION DU DOSSIER GIT"
+RED "FIN DU SCRIPT, SUPPRESION DU DOSSIER GIT"
 cd ~
 rm -r Test

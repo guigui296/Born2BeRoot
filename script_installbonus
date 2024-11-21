@@ -1,15 +1,17 @@
 #!/bin/bash
 
 if [ "$(id -u)" -ne 0 ]; then
-  echo "Ce script doit être exécuté en tant que root."
+  RED "Ce script doit être exécuté en tant que root."
   exit 1
 fi
 
 BLUEC=$(tput setaf 4)
 RESET=$(tput sgr0)
 BACK=$(tput setab 7)
+REDC=$(tput setaf 1)
 
 function BLUE () { echo "${BLUEC}${BACK}$1${RESET}"; }
+function RED () { echo "${REDC}${BACK}$1${RESET}"; }
 
 BLUE "INSTALLATION DE LA PARTIE BONUS"
 sleep 5
