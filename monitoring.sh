@@ -13,7 +13,7 @@ lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
 lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
 ctcp=$(ss -Ht state established | wc -l)
 ulog=$(users | wc -w)
-ip=$(hostname -I)
+ip=$(hostname -I | awk '{print $1}')
 mac=$(ip link show | grep "ether" | awk '{print $2}')
 cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
 wall "	#Architecture: $arc
