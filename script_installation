@@ -137,7 +137,7 @@ cd /usr/local/bin
 wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Test/refs/heads/main/monitoring.sh
 sleep 3
 BLUE "ATTRIBUTION DES DROITS"
-chmod 777 monitoring.sh
+chmod +x monitoring.sh
 sleep 3
 BLUE "AJOUT DROIT DANS sudoers"
 sed -i '/^%sudo.*ALL$/a gbehra	ALL=(ALL) NOPASSWD: /usr/local/bin/monitoring.sh' /etc/sudoers
