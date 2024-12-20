@@ -9,7 +9,7 @@ fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print f
 udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
 pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
 cpul=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}')
-lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
+lb=$(who -b | awk '$2 == "système" {print $3 " " $4}')
 lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
 ctcp=$(ss -Ht state established | wc -l)
 ulog=$(users | wc -w)
