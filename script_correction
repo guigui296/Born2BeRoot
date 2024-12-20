@@ -42,4 +42,4 @@ lsblk
 sleep 5
 RED "FIN DU SCRIPT, SUPPRESION DU DOSSIER GIT"
 cd ~
-rm -r Test
+rm -r Born2BeRoot
