@@ -18,7 +18,7 @@ function RED () { echo "${REDC}${BACK}$1${RESET}"; }
 
 BLUE "SUPPRESSION DE monitoring.sh CAR FLEMME DE CHANGER LE GITHUB"
 cd ~
-cd Test
+cd Born2BeRoot
 rm monitoring.sh
 ls
 sleep 1
@@ -161,7 +161,7 @@ chage -l root
 sleep 1
 BLUE "MODIFICATION REGLE DE script_installbonus ET script_correction"
 cd ~
-cd Test
+cd Born2BeRoot
 ls
 chmod +x script_correction
 sleep 1
