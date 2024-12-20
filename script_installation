@@ -21,101 +21,101 @@ cd ~
 cd Test
 rm monitoring.sh
 ls
-sleep 3
+sleep 1
 cd ~
 BLUE "MISE A JOUR DU SYSTEME"
 apt update -y
 apt upgrade -y
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE SUDO"
 apt install sudo -y
-sleep 3
+sleep 1
 BLUE "AJOUT DE gbehra AU GROUPE SUDO"
 usermod -aG sudo gbehra
-sleep 3
+sleep 1
 BLUE "VERIFICATION DE L'AJOUT"
 getent group sudo
-sleep 3
+sleep 1
 BLUE "AJOUT DES PRIVILEGES A gbehra DANS SUDOERS"
 sed -i '/^# User privilege specification/a gbehra	ALL=(ALL) ALL' /etc/sudoers
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE VIM"
 apt install vim -y
-sleep 3
+sleep 1
 BLUE "VERIFICATION DE LA VERSION"
 vim --version
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE OPENSSH"
 apt install openssh-server -y
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 systemctl status ssh
-sleep 3
+sleep 1
 BLUE "CHANGEMENT DU PORT 22 EN 4242"
 sed -i 's/^#Port 22$/Port 4242/' /etc/ssh/sshd_config
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 grep Port /etc/ssh/sshd_config
-sleep 3
+sleep 1
 BLUE "REDEMARRAGE DU SERVICE SSH"
 service ssh restart
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE UFW"
 apt install ufw -y
-sleep 3
+sleep 1
 BLUE "ACTIVATION DE UFW"
 ufw enable
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 ufw status numbered
-sleep 3
+sleep 1
 BLUE "CONFIGURATION PORT"
 ufw allow 4242
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 ufw status numbered
-sleep 3
+sleep 1
 BLUE "REDEMARRAGE SSH"
 systemctl restart ssh
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 service sshd status
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE LIBPAM-PWQUALITY"
 apt install libpam-pwquality -y
-sleep 3
+sleep 1
 BLUE "AJOUT DES REGLES MOT DE PASSE"
 sed -i '/^password.*pam_pwquality.so retry=3/s/$/ minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root/' /etc/pam.d/common-password
-sleep 3
+sleep 1
 BLUE "MISE EN PLACE DES REGLES DE DUREE DU MOT DE PASSE"
 sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS 30/' /etc/login.defs
 sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS 2/' /etc/login.defs
 sed -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE 7/' /etc/login.defs
-sleep 3
+sleep 1
 BLUE "CREATION GROUPE user42"
 groupadd user42
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 getent group
-sleep 3
+sleep 1
 BLUE "AJOUT DE gbehra AU GROUPE user42"
 usermod -aG user42 gbehra
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 getent group user42
-sleep 3
+sleep 1
 BLUE "CREATION SUDO.LOG"
 cd /var/log
 mkdir sudo
-sleep 3
+sleep 1
 BLUE "VERIFICATION DU FICHIER"
 ls
-sleep 3
+sleep 1
 cd sudo
 touch sudo.log
 BLUE "VERIFICATION sudo.log"
 ls
-sleep 3
+sleep 1
 cd ~
 BLUE "VERIFICATION DE L'EMPLACEMENT"
 ls -a
@@ -124,29 +124,29 @@ sed -i '/^Defaults.*bin"$/a Defaults	log_input, log_output' /etc/sudoers
 sed -i '/^Defaults.*bin"$/a Defaults	logfile="/var/log/sudo/sudo.log"' /etc/sudoers
 sed -i '/^Defaults.*bin"$/a Defaults	passwd_tries=3' /etc/sudoers
 sed -i '/^Defaults.*bin"$/a Defaults	badpass_message="Mot de passe incorrect"' /etc/sudoers
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE net-tools"
 apt install -y net-tools
-sleep 3
+sleep 1
 BLUE "INSTALLATION DE wget"
 apt install wget -y
-sleep 3
+sleep 1
 BLUE "MONITORING"
 cd /usr/local/bin
 wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Born2BeRoot/refs/heads/main/monitoring.sh
-sleep 3
+sleep 1
 BLUE "ATTRIBUTION DES DROITS"
 chmod +x monitoring.sh
-sleep 3
+sleep 1
 BLUE "AJOUT DROIT DANS sudoers"
 sed -i '/^%sudo.*ALL$/a gbehra	ALL=(ALL) NOPASSWD: /usr/local/bin/monitoring.sh' /etc/sudoers
-sleep 3
+sleep 1
 BLUE "TEST SCRIPT MONITORING"
 /usr/local/bin/monitoring.sh
-sleep 3
+sleep 1
 BLUE "AJOUT REGLE CRONTAB"
 (crontab -l; echo "*/10 * * * * /usr/local/bin/monitoring.sh") | crontab -
-sleep 3
+sleep 1
 BLUE "CHANGEMENT DES MOTS DE PASSES POUR LE RESPECT DE LA POLITIQUE (root et gbehra)"
 echo "gbehra:$USER_PASSWORD" | chpasswd
 echo "root:$ROOT_PASSWORD" | chpasswd
@@ -154,20 +154,20 @@ BLUE "Les mots de passe ont été modifiés avec succès"
 BLUE "APPLICATION DES POLITIQUES D'EXPIRATION DES MOTS DE PASSES"
 chage -M 30 -m 2 -W 7 root
 chage -M 30 -m 2 -W 7 gbehra
-sleep 2
+sleep 1
 BLUE "VERIFICATION AVANT REBOOT"
 chage -l gbehra
 chage -l root
-sleep 3
+sleep 1
 BLUE "MODIFICATION REGLE DE script_installbonus ET script_correction"
 cd ~
 cd Test
 ls
 chmod +x script_correction
-sleep 3
+sleep 1
 BLUE "VERIFICATION"
 test -x script_correction && BLUE "script_correction est exécutable" || RED "script_correction n'est pas exécutable"
-sleep 3
-BLUE "FIN, SUPPRESSION DU SCRIPT, REBOOT LA VM"
-sleep 3
+sleep 1
+BLUE "FIN, SUPPRESSION DU SCRIPT"
+sleep 1
 rm script_installation
