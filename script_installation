@@ -133,7 +133,7 @@ apt install wget -y
 sleep 3
 BLUE "MONITORING"
 cd /usr/local/bin
-wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Test/refs/heads/main/monitoring.sh
+wget -O monitoring.sh https://raw.githubusercontent.com/guigui296/Born2BeRoot/refs/heads/main/monitoring.sh
 sleep 3
 BLUE "ATTRIBUTION DES DROITS"
 chmod +x monitoring.sh
