@@ -70,7 +70,6 @@ BLUE "VERIFICATION"
 ufw status numbered
 sleep 3
 BLUE "CONFIGURATION PORT"
-ufw allow ssh
 ufw allow 4242
 sleep 3
 BLUE "VERIFICATION"
@@ -164,11 +163,9 @@ BLUE "MODIFICATION REGLE DE script_installbonus ET script_correction"
 cd ~
 cd Test
 ls
-chmod +x script_installbonus
 chmod +x script_correction
 sleep 3
 BLUE "VERIFICATION"
-test -x script_installbonus && BLUE "script_installbonus est exécutable" || RED "script_installbonus n'est pas exécutable"
 test -x script_correction && BLUE "script_correction est exécutable" || RED "script_correction n'est pas exécutable"
 sleep 3
 BLUE "FIN, SUPPRESSION DU SCRIPT, REBOOT LA VM"
